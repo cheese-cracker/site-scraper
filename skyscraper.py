@@ -21,8 +21,12 @@ def article_catch(url_list, i):
                 content = content + '\n' + par.text
             else:
                 content = par.text
-        pictimage = Soup.find('picture', {'class': 'component-responsive-image'})
-        image = pictimage.find('img').get('src')
+        pictimage = Soup.find('div', {'class': 'placeholder-content'})
+        if pictimage is not None:
+            image = pictimage.find('img').get('src')
+        else:
+            image = None
+            print('None')
         title = Soup.find('h1').text
         dit = {
                 'title': title,
@@ -37,7 +41,7 @@ def article_catch(url_list, i):
 
 def runCityScape():
     url_href_type = re.compile("/humor/borowitz-report/.+")
-    for i in range(1, 10):
+    for i in range(1, 17):
         url_list = []
         url2scrape = "https://www.newyorker.com/humor/borowitz-report/page/" + str(i)
         Soup = BeautifulSoup(session.get(url2scrape).text, "html.parser")
