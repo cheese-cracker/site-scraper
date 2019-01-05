@@ -38,14 +38,15 @@ def article_catch(url_list, j):
 
 
 url2scrape = 'https://www.theonion.com'
-for i in range(2):
+for i in range(17):
     Soup = BeautifulSoup(ses.get(url2scrape).text, "html.parser")
     url_list = []
     for article in Soup.find_all('article'):
         head = article.find('h1')
         url_list.append(head.find('a', {'class': "js_entry-link"}).get('href'))
 
-    pprint(url_list)
+    # pprint(url_list)
     article_catch(url_list, i)
+    print(i, "Done")
     btn = Soup.find('div', {'class': 'load-more__button'})
     url2scrape = "https://www.theonion.com" + btn.find('a').get('href')
